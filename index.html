@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Imágenes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff; /* Fondo blanco */
+        }
+
+        /* Estilo para las franjas de color azul y verde */
+        .franja {
+            width: 100%;
+            height: 30px; /* Reducido el tamaño de las franjas */
+            position: fixed; /* Fija las franjas en la ventana */
+            left: 0;
+        }
+
+        .franja-azul {
+            background-color: #4a90e2; /* Azul */
+            top: 0; /* Fija la franja azul en la parte superior */
+        }
+
+        .franja-verde {
+            background-color: #7ed957; /* Verde pasto */
+            bottom: 0; /* Fija la franja verde en la parte inferior */
+        }
+
+        /* Ajustamos los márgenes para que el contenido no se tape */
+        h1, p {
+            margin-top: 50px; /* Aumentado el margen superior para que el texto no quede tapado */
+        }
+
+        .image-container {
+            display: flex;
+            flex-direction: column; /* Hacemos que las imágenes se apilen verticalmente */
+            align-items: center; /* Centra las imágenes horizontalmente */
+            gap: 20px; /* Espacio entre las imágenes */
+            margin-top: 30px; /* Reducido el margen superior para acercar la imagen al título */
+            margin-bottom: 40px; /* Reducido el margen inferior para que la última imagen esté más cerca de la franja verde */
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            touch-action: none; /* Desactivar acciones táctiles predeterminadas */
+        }
+
+        img:hover {
+            transform: scale(1.2); /* Zoom al pasar el ratón (en dispositivos con ratón) */
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 768px) {
+            img {
+                width: 45%; /* Mantiene las imágenes con un 45% del ancho en pantallas grandes */
+            }
+        }
+
+        @media (max-width: 767px) {
+            img {
+                width: 90%; /* Las imágenes ocupan el 90% en pantallas más pequeñas */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Franjas de color azul y verde -->
+    <div class="franja franja-azul"></div>
+    <div class="franja franja-verde"></div>
+
+    <h1>Galería de Imágenes</h1>
+    <div class="image-container">
+        <!-- Imagen 1 de la galería sin zoom -->
+        <img src="laboo.png" alt="Imagen de la Galería 1">
+
+        <!-- Imagen 2 de la galería con zoom -->
+        <img src="labozoom1.png" alt="Imagen de la Galería 2" id="imageZoom2">
+
+        <!-- Imagen 3 de la galería con zoom -->
+        <img src="Labozoom2.png" alt="Imagen de la Galería 3" id="imageZoom3">
+
+        <!-- Imagen 4 de la galería con zoom -->
+        <img src="Labozoom3.png" alt="Imagen de la Galería 4" id="imageZoom4">
+    </div>
+
+    <script>
+        const image2 = document.getElementById('imageZoom2');
+        const image3 = document.getElementById('imageZoom3');
+        const image4 = document.getElementById('imageZoom4');
+        let scale2 = 1;
+        let scale3 = 1;
+        let scale4 = 1;
+
+        // Función para aplicar zoom con gesto táctil (pinch) para la imagen 2
+        let initialDistance2 = null;
+        image2.addEventListener('touchstart', (event) => {
+            if (event.touches.length == 2) {
+                initialDistance2 = getDistance(event.touches[0], event.touches[1]);
+            }
+        });
+
+        image2.addEventListener('touchmove', (event) => {
+            if (event.touches.length == 2 && initialDistance2) {
+                const currentDistance2 = getDistance(event.touches[0], event.touches[1]);
+                const zoomFactor2 = currentDistance2 / initialDistance2;
+                scale2 = Math.min(Math.max(1, scale2 * zoomFactor2), 10); // Limitar el zoom entre 1x y 10x
+                image2.style.transform = `scale(${scale2})`;
+                initialDistance2 = currentDistance2; // Actualizar la distancia inicial
+                event.preventDefault(); // Prevenir el desplazamiento de la pantalla
+            }
+        });
+
+        // Función para aplicar zoom con gesto táctil (pinch) para la imagen 3
+        let initialDistance3 = null;
+        image3.addEventListener('touchstart', (event) => {
+            if (event.touches.length == 2) {
+                initialDistance3 = getDistance(event.touches[0], event.touches[1]);
+            }
+        });
+
+        image3.addEventListener('touchmove', (event) => {
+            if (event.touches.length == 2 && initialDistance3) {
+                const currentDistance3 = getDistance(event.touches[0], event.touches[1]);
+                const zoomFactor3 = currentDistance3 / initialDistance3;
+                scale3 = Math.min(Math.max(1, scale3 * zoomFactor3), 10); // Limitar el zoom entre 1x y 10x
+                image3.style.transform = `scale(${scale3})`;
+                initialDistance3 = currentDistance3; // Actualizar la distancia inicial
+                event.preventDefault(); // Prevenir el desplazamiento de la pantalla
+            }
+        });
+
+        // Función para aplicar zoom con gesto táctil (pinch) para la imagen 4
+        let initialDistance4 = null;
+        image4.addEventListener('touchstart', (event) => {
+            if (event.touches.length == 2) {
+                initialDistance4 = getDistance(event.touches[0], event.touches[1]);
+            }
+        });
+
+        image4.addEventListener('touchmove', (event) => {
+            if (event.touches.length == 2 && initialDistance4) {
+                const currentDistance4 = getDistance(event.touches[0], event.touches[1]);
+                const zoomFactor4 = currentDistance4 / initialDistance4;
+                scale4 = Math.min(Math.max(1, scale4 * zoomFactor4), 10); // Limitar el zoom entre 1x y 10x
+                image4.style.transform = `scale(${scale4})`;
+                initialDistance4 = currentDistance4; // Actualizar la distancia inicial
+                event.preventDefault(); // Prevenir el desplazamiento de la pantalla
+            }
+        });
+
+        // Función para calcular la distancia entre dos puntos
+        function getDistance(touch1, touch2) {
+            const dx = touch1.pageX - touch2.pageX;
+            const dy = touch1.pageY - touch2.pageY;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+    </script>
+
+</body>
+</html>
