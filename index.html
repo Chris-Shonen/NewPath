@@ -50,12 +50,8 @@
             height: auto;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-            touch-action: none; /* Desactivar acciones táctiles predeterminadas */
-        }
-
-        img:hover {
-            transform: scale(1.2); /* Zoom al pasar el ratón (en dispositivos con ratón) */
+            /* Eliminar la transición de escala */
+            transition: none; 
         }
 
         h1 {
@@ -94,88 +90,16 @@
         <!-- Imagen 1 de la galería sin zoom -->
         <img src="laboo.png" alt="Imagen de la Galería 1">
 
-        <!-- Imagen 2 de la galería con zoom -->
-        <img src="labozoom1.png" alt="Imagen de la Galería 2" id="imageZoom2">
+        <!-- Imagen 2 de la galería sin zoom -->
+        <img src="labozoom1.png" alt="Imagen de la Galería 2">
 
-        <!-- Imagen 3 de la galería con zoom -->
-        <img src="Labozoom2.png" alt="Imagen de la Galería 3" id="imageZoom3">
+        <!-- Imagen 3 de la galería sin zoom -->
+        <img src="labozoom2.png" alt="Imagen de la Galería 3">
 
-        <!-- Imagen 4 de la galería con zoom -->
-        <img src="Labozoom3.png" alt="Imagen de la Galería 4" id="imageZoom4">
+        <!-- Imagen 4 de la galería sin zoom -->
+        <img src="labozoom3.png" alt="Imagen de la Galería 4">
     </div>
-
-    <script>
-        const image2 = document.getElementById('imageZoom2');
-        const image3 = document.getElementById('imageZoom3');
-        const image4 = document.getElementById('imageZoom4');
-        let scale2 = 1;
-        let scale3 = 1;
-        let scale4 = 1;
-
-        // Función para aplicar zoom con gesto táctil (pinch) para la imagen 2
-        let initialDistance2 = null;
-        image2.addEventListener('touchstart', (event) => {
-            if (event.touches.length == 2) {
-                initialDistance2 = getDistance(event.touches[0], event.touches[1]);
-            }
-        });
-
-        image2.addEventListener('touchmove', (event) => {
-            if (event.touches.length == 2 && initialDistance2) {
-                const currentDistance2 = getDistance(event.touches[0], event.touches[1]);
-                const zoomFactor2 = currentDistance2 / initialDistance2;
-                scale2 = Math.min(Math.max(1, scale2 * zoomFactor2), 10); // Limitar el zoom entre 1x y 10x
-                image2.style.transform = `scale(${scale2})`;
-                initialDistance2 = currentDistance2; // Actualizar la distancia inicial
-                event.preventDefault(); // Prevenir el desplazamiento de la pantalla
-            }
-        });
-
-        // Función para aplicar zoom con gesto táctil (pinch) para la imagen 3
-        let initialDistance3 = null;
-        image3.addEventListener('touchstart', (event) => {
-            if (event.touches.length == 2) {
-                initialDistance3 = getDistance(event.touches[0], event.touches[1]);
-            }
-        });
-
-        image3.addEventListener('touchmove', (event) => {
-            if (event.touches.length == 2 && initialDistance3) {
-                const currentDistance3 = getDistance(event.touches[0], event.touches[1]);
-                const zoomFactor3 = currentDistance3 / initialDistance3;
-                scale3 = Math.min(Math.max(1, scale3 * zoomFactor3), 10); // Limitar el zoom entre 1x y 10x
-                image3.style.transform = `scale(${scale3})`;
-                initialDistance3 = currentDistance3; // Actualizar la distancia inicial
-                event.preventDefault(); // Prevenir el desplazamiento de la pantalla
-            }
-        });
-
-        // Función para aplicar zoom con gesto táctil (pinch) para la imagen 4
-        let initialDistance4 = null;
-        image4.addEventListener('touchstart', (event) => {
-            if (event.touches.length == 2) {
-                initialDistance4 = getDistance(event.touches[0], event.touches[1]);
-            }
-        });
-
-        image4.addEventListener('touchmove', (event) => {
-            if (event.touches.length == 2 && initialDistance4) {
-                const currentDistance4 = getDistance(event.touches[0], event.touches[1]);
-                const zoomFactor4 = currentDistance4 / initialDistance4;
-                scale4 = Math.min(Math.max(1, scale4 * zoomFactor4), 10); // Limitar el zoom entre 1x y 10x
-                image4.style.transform = `scale(${scale4})`;
-                initialDistance4 = currentDistance4; // Actualizar la distancia inicial
-                event.preventDefault(); // Prevenir el desplazamiento de la pantalla
-            }
-        });
-
-        // Función para calcular la distancia entre dos puntos
-        function getDistance(touch1, touch2) {
-            const dx = touch1.pageX - touch2.pageX;
-            const dy = touch1.pageY - touch2.pageY;
-            return Math.sqrt(dx * dx + dy * dy);
-        }
-    </script>
 
 </body>
 </html>
+
